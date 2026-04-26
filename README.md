@@ -8,7 +8,7 @@ records) with live trigger signals (weather, time-of-day,
 calendar events), and surfaces actionable rider 
 pre-positioning recommendations before breaches occur.
 
-**Live demo:** deployment link — coming soon  
+**Live demo:** https://safeguard-ihtrpqqnajzhgcwpqglpkp.streamlit.app
 **Built by:** Abinandida R  
 **Stack:** Python · Streamlit · SQLite · Folium · 
            Plotly · OpenWeatherMap API
