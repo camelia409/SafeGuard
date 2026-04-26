@@ -1,0 +1,8 @@
+.env
+__pycache__/
+*.pyc
+data/surgeguard.db
+data/zomato.csv
+*.txt
+!docs/*.txt
+images/
