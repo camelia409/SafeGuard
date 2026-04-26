@@ -57,6 +57,30 @@ def _build_event_calendar() -> dict[str, tuple[float, str]]:
     return calendar
 
 
+def _get_api_key() -> str:
+    # Method 1: Streamlit secrets (Streamlit Cloud)
+    try:
+        import streamlit as st
+        key = st.secrets.get("OPENWEATHER_API_KEY", "")
+        if key:
+            return key
+    except Exception:
+        pass
+    
+    # Method 2: Environment variable / .env file
+    try:
+        from dotenv import load_dotenv
+        load_dotenv()
+    except Exception:
+        pass
+    key = os.environ.get("OPENWEATHER_API_KEY", "")
+    if key:
+        return key
+    
+    # Method 3: No key found
+    return ""
+
+
 def get_weather_multiplier(api_key: str) -> tuple[float, str, float]:
     """
     Fetch current Bangalore weather and convert to a demand multiplier.
@@ -248,8 +272,7 @@ def get_event_multiplier() -> tuple[float, str]:
 
 def get_trigger_vector() -> dict[str, Any]:
     """Compute real-time trigger multipliers and combined score signal."""
-    load_dotenv()
-    api_key = os.getenv("OPENWEATHER_API_KEY", "")
+    api_key = _get_api_key()
 
     weather_multiplier, weather_description, bangalore_temp_c = get_weather_multiplier(
         api_key
