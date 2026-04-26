@@ -58,27 +58,23 @@ def _build_event_calendar() -> dict[str, tuple[float, str]]:
 
 
 def _get_api_key() -> str:
-    # Method 1: Streamlit secrets (Streamlit Cloud)
+    # Method 1: Streamlit Cloud secrets
     try:
         import streamlit as st
-        key = st.secrets.get("OPENWEATHER_API_KEY", "")
-        if key:
-            return key
+        if "OPENWEATHER_API_KEY" in st.secrets:
+            return str(st.secrets["OPENWEATHER_API_KEY"])
     except Exception:
         pass
     
-    # Method 2: Environment variable / .env file
+    # Method 2: .env file / environment variable
     try:
         from dotenv import load_dotenv
         load_dotenv()
     except Exception:
         pass
-    key = os.environ.get("OPENWEATHER_API_KEY", "")
-    if key:
-        return key
     
-    # Method 3: No key found
-    return ""
+    key = os.environ.get("OPENWEATHER_API_KEY", "")
+    return key
 
 
 def get_weather_multiplier(api_key: str) -> tuple[float, str, float]:
